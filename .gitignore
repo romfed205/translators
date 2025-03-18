@@ -1,0 +1,25 @@
+# Build
+build/
+cmake-build-debug/
+cmake-build-release/
+
+# Generated ANTLR files
+# generated/*
+# !generated/.gitkeep
+
+# Compiled bins
+*.o
+*.obj
+*.exe
+*.out
+expr_parser
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Java
+*.class 
