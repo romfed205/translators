@@ -8,7 +8,7 @@
 
 class ExprTreeVisitor : public ExprBaseVisitor {
 public:
-    // Implementation for tree traversal/visualization
+    // обход дерева разбора
     antlrcpp::Any visitProgram(ExprParser::ProgramContext *ctx) override {
         std::cout << "Program:" << std::endl;
         return visitChildren(ctx);
@@ -16,7 +16,7 @@ public:
 
     antlrcpp::Any visitExpr(ExprParser::ExprContext *ctx) override {
         std::cout << "  Expression: ";
-        // Print the full expression for clarity
+        // вывод полной выражения для ясности
         for (auto child : ctx->children) {
             std::cout << child->getText() << " ";
         }
@@ -46,33 +46,33 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    // Open input file
+    // открытие входного файла
     std::ifstream inputFile(argv[1]);
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file " << argv[1] << std::endl;
         return 1;
     }
     
-    // Read entire file content
+    // чтение всего содержимого файла
     std::string input((std::istreambuf_iterator<char>(inputFile)),
                        std::istreambuf_iterator<char>());
     inputFile.close();
     
-    // Create input stream from string
+    // создание входного потока из строки
     antlr4::ANTLRInputStream inputStream(input);
     
-    // Create lexer and token stream
+    // создание лексера и потока токенов
     ExprLexer lexer(&inputStream);
     antlr4::CommonTokenStream tokens(&lexer);
     
-    // Create parser and parse the input
+    // создание парсера и разбора входного текста
     ExprParser parser(&tokens);
     antlr4::tree::ParseTree* tree = parser.program();
     
-    // Print parse tree structure for debugging
+    // вывод структуры дерева разбора для отладки
     std::cout << "Parse tree: " << tree->toStringTree(&parser) << std::endl << std::endl;
     
-    // Visit the parse tree
+    // обход дерева разбора
     ExprTreeVisitor visitor;
     visitor.visit(tree);
     
